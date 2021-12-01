@@ -9,6 +9,12 @@ char *get_file_content(char *filename)
 {
     FILE *file = fopen(filename, "r");
 
+    if (file == NULL)
+    {
+        fprintf(stderr, "FILE NOT OPENED\n");
+        exit(1);
+    }
+
     fseek(file, 0, SEEK_END);
     int lengthOfFile = ftell(file);
     rewind(file);
