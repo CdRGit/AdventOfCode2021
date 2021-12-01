@@ -5,4 +5,4 @@
 These are my solutions, in pure C
 
 ## How do I run this?
-If you're on windows you can do `./run daynn` (where nn is the day) or `./run all`, if you're on linux you can inspect run.bat and translate it to bash I guess lol
+If you're on windows you can do `./run dayn` (where n is the day) or `./run all`, if you're on linux you can inspect run.bat and translate it to bash I guess lol
