@@ -5,6 +5,17 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+int to_int(char* string)
+{
+    int temp = 0;
+    for (int j = 0; string[j] != '\0'; j++)
+    {
+        int chr_val = string[j] - '0';
+        temp = temp * 10 + chr_val;
+    }
+    return temp;
+}
+
 char *get_file_content(char *filename)
 {
     FILE *file = fopen(filename, "r");
@@ -31,7 +42,7 @@ char *get_file_content(char *filename)
     return str;
 }
 
-char *text_buffer[32 * 1024];
+char *newline_buffer[32 * 1024];
 
 char **split_by_newlines(char *text)
 {
@@ -47,7 +58,7 @@ char **split_by_newlines(char *text)
             temp[i++] = '\0';
             text++;
             i = 0;
-            text_buffer[j++] = temp;
+            newline_buffer[j++] = temp;
             temp = malloc(strlen(text));
         }
         else
@@ -55,9 +66,10 @@ char **split_by_newlines(char *text)
             temp[i++] = *text++;
         }
     }
-    text_buffer[j++] = temp;
-    text_buffer[j] = NULL;
-    return text_buffer;
+    temp[i++] = '\0';
+    newline_buffer[j++] = temp;
+    newline_buffer[j] = NULL;
+    return newline_buffer;
 }
 
 int int_buffer[32 * 1024];
@@ -68,21 +80,20 @@ int *convert_to_int(char **lines)
     for (i = 0; lines[i] != NULL; i++)
     {
         char *line = lines[i];
-        int temp = 0;
-        for (int j = 0; line[j] != '\0'; j++)
-        {
-            int chr_val = line[j] - '0';
-            temp = temp * 10 + chr_val;
-        }
-        int_buffer[i] = temp;
+        int_buffer[i] = to_int(line);
     }
     int_buffer[i] = -1;
     return int_buffer;
 }
 
-int *get_ints_from_file(char *filename)
+char **get_lines_from_file(char *filename)
 {
     char *content = get_file_content(filename);
-    char **split = split_by_newlines(content);
+    return split_by_newlines(content);
+}
+
+int *get_ints_from_file(char *filename)
+{
+    char **split = get_lines_from_file(filename);
     return convert_to_int(split);
 }
