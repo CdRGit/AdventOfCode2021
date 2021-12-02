@@ -5,7 +5,7 @@ int part2(int *ints);
 
 void run(bool real)
 {
-    int *ints = get_ints_from_file(real ? "day1.txt" : "day1_test.txt");
+    int *ints = get_ints_from_file(real ? "input.txt" : "example.txt");
 
     printf("Part 1\n");
     printf("= %u\n", part1(ints));

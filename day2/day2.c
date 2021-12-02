@@ -5,7 +5,7 @@ int part2(char **lines);
 
 void run(bool real)
 {
-    char **lines = get_lines_from_file(real ? "day2.txt" : "day2_test.txt");
+    char **lines = get_lines_from_file(real ? "input.txt" : "example.txt");
 
     printf("Part 1\n");
     printf("= %u\n", part1(lines));
