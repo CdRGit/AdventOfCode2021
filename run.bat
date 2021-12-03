@@ -5,12 +5,11 @@ if "%1"=="" (
     exit /b 1
 )
 
-cls
-
 if %1==all (
     for /d %%s in (day??) do (
         cd %%~ns
         gcc %%~ns.c -o %%~ns.exe -Wpedantic -Wall -Werror -I../ && %%~ns
+        echo[
         cd ../
     )
 ) else (
