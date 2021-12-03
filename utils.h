@@ -5,6 +5,16 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+int bin_str_to_int(char* string)
+{
+    int value = 0;
+    for (int i = 0; string[i] != '\0'; i++) {
+        value <<= 1;
+        value |= string[i] == '1';
+    }
+    return value;
+}
+
 int to_int(char* string)
 {
     int temp = 0;
