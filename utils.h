@@ -15,14 +15,19 @@ int bin_str_to_int(char* string)
     return value;
 }
 
-int to_int(char* string)
+int to_int(char* string, int* length)
 {
     int temp = 0;
-    for (int j = 0; string[j] != '\0'; j++)
+    int j = 0;
+    for (j = 0; string[j] != '\0'; j++)
     {
         int chr_val = string[j] - '0';
+        if (chr_val < 0 || chr_val > 9)
+            break;
         temp = temp * 10 + chr_val;
     }
+    if (length != NULL)
+        *length = j;
     return temp;
 }
 
@@ -90,7 +95,7 @@ int *convert_to_int(char **lines)
     for (i = 0; lines[i] != NULL; i++)
     {
         char *line = lines[i];
-        int_buffer[i] = to_int(line);
+        int_buffer[i] = to_int(line, NULL);
     }
     int_buffer[i] = -1;
     return int_buffer;
