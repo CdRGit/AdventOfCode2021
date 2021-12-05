@@ -5,6 +5,10 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
+#define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
+
+
 int bin_str_to_int(char* string)
 {
     int value = 0;
