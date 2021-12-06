@@ -37,7 +37,7 @@ int part1(char **lines)
             exit(1);
         }
         char* num = space + 1;
-        int value = to_int(num);
+        int value = to_int(num, NULL);
         char first = *line;
         switch (first)
         {
@@ -70,7 +70,7 @@ int part2(char **lines)
             exit(1);
         }
         char* num = space + 1;
-        int value = to_int(num);
+        int value = to_int(num, NULL);
         char first = *line;
         switch (first)
         {
