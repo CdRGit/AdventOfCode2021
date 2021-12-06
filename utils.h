@@ -61,6 +61,36 @@ char *get_file_content(char *filename)
     return str;
 }
 
+char *comma_buffer[32 * 1024];
+
+char **split_by_comma(char *text)
+{
+    char *temp = malloc(strlen(text));
+
+    int i = 0;
+    int j = 0;
+
+    while (*text != '\0')
+    {
+        if (*text == ',')
+        {
+            temp[i++] = '\0';
+            text++;
+            i = 0;
+            comma_buffer[j++] = temp;
+            temp = malloc(strlen(text));
+        }
+        else
+        {
+            temp[i++] = *text++;
+        }
+    }
+    temp[i++] = '\0';
+    comma_buffer[j++] = temp;
+    comma_buffer[j] = NULL;
+    return comma_buffer;
+}
+
 char *newline_buffer[32 * 1024];
 
 char **split_by_newlines(char *text)
