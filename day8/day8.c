@@ -118,7 +118,7 @@ int part2(char **entries)
                 shared_sixes &= value;
             }
         }
-        
+
         for (int j = 0; j < 7; j++)
         {
             bool is_in_one = 1 & (one >> j);
@@ -141,9 +141,29 @@ int part2(char **entries)
             digit[j] &= in_sixes ^ (is_in_sixes ? 0 : 0x7F);
         }
 
-        while (!validate_digit(digit)) {
-            printf("AAAAAA\n");
-            // do cleans here
+        while (!validate_digit(digit))
+        {
+            // do cleans here (turned out to be unnessecary but still implemented)
+            for (int j = 0; j < 7; j++)
+            {
+                // count the bits
+                unsigned int v = digit[j];
+                unsigned int c = 0;
+                for (c = 0; v; v >>= 1)
+                {
+                    c += v & 1;
+                }
+
+                if (c == 1) {
+                    // wahoo!
+                    segment value = digit[j];
+                    for (int k = 0; k < 7; k++) {
+                        if (k == j)
+                            continue;
+                        digit[k] &= value ^ 0x7F;
+                    }
+                }
+            }
         }
 
         char **actual_entries = split_by_spaces(actual);
@@ -178,31 +198,33 @@ int part2(char **entries)
 #define NINE (TOP | TOP_LEFT | TOP_RIGHT | MIDDLE | BOTTOM_RIGHT | BOTTOM)
 #define ZERO (TOP | TOP_LEFT | TOP_RIGHT | BOTTOM_LEFT | BOTTOM_RIGHT | BOTTOM)
 
-int digit_from_segments(segment segments) {
-    switch (segments) {
-        case ONE:
-            return 1;
-        case TWO:
-            return 2;
-        case THREE:
-            return 3;
-        case FOUR:
-            return 4;
-        case FIVE:
-            return 5;
-        case SIX:
-            return 6;
-        case SEVEN:
-            return 7;
-        case EIGHT:
-            return 8;
-        case NINE:
-            return 9;
-        case ZERO:
-            return 0;
-        default:
-            fprintf(stderr, "UNKNOWN SEGMENTS: %02X", segments);
-            exit(1);
+int digit_from_segments(segment segments)
+{
+    switch (segments)
+    {
+    case ONE:
+        return 1;
+    case TWO:
+        return 2;
+    case THREE:
+        return 3;
+    case FOUR:
+        return 4;
+    case FIVE:
+        return 5;
+    case SIX:
+        return 6;
+    case SEVEN:
+        return 7;
+    case EIGHT:
+        return 8;
+    case NINE:
+        return 9;
+    case ZERO:
+        return 0;
+    default:
+        fprintf(stderr, "UNKNOWN SEGMENTS: %02X", segments);
+        exit(1);
     }
 }
 
@@ -213,9 +235,12 @@ bool validate_digit(segment digit[7])
     {
         complete += digit[i];
     }
-    if (complete == ALL) {
+    if (complete == ALL)
+    {
         return true;
-    } else {
+    }
+    else
+    {
         return false;
     }
 }
