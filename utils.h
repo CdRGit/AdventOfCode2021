@@ -50,6 +50,12 @@ char *get_file_content(char *filename)
     rewind(file);
 
     char *str = malloc(lengthOfFile + 1);
+
+    if (str == NULL) {
+        fprintf(stderr, "MALLOC FAILED\n");
+        exit(1);
+    }
+
     memset(str, 0, lengthOfFile + 1);
 
     char c;
@@ -58,6 +64,9 @@ char *get_file_content(char *filename)
     {
         str[i++] = c;
     }
+
+    fclose(file);
+
     return str;
 }
 
@@ -175,4 +184,22 @@ int *get_ints_from_file(char *filename)
 {
     char **split = get_lines_from_file(filename);
     return convert_to_int(split);
+}
+
+void sort_in_place(unsigned long long *array, int length) {
+    if (length == 1)
+        return;
+
+    int max_idx = 0;
+    unsigned long long max = 0;
+    for (int i = 0; i < length; i++) {
+        if (array[i] > max)
+        {
+            max = array[i];
+            max_idx = i;
+        }
+    }
+    array[max_idx] = array[length - 1];
+    array[length - 1] = max;
+    sort_in_place(array, length - 1);
 }
