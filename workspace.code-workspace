@@ -7,7 +7,9 @@
 	"settings": {
 		"files.associations": {
 			"utils.h": "c",
-			"stdlib.h": "c"
+			"stdlib.h": "c",
+			"inttypes.h": "c",
+			"stdint.h": "c"
 		}
 	}
 }
