@@ -158,7 +158,7 @@ int part2(char **lines)
     {
         for (int x = 0; x < width; x++)
         {
-            printf("%c", paper[x + y * SIZE] ? '#' : ' ');
+            printf("%c", paper[x + y * SIZE] ? '|' : ' ');
             total += paper[x + y * SIZE] ? 1 : 0;
         }
         printf("\n");
