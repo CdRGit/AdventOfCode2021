@@ -8,6 +8,14 @@
 #define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 
+typedef unsigned char           U8;
+typedef   signed char           I8;
+typedef unsigned short int      U16;
+typedef   signed short int      I16;
+typedef unsigned int            U32;
+typedef   signed int            I32;
+typedef unsigned long long int  U64;
+typedef   signed long long int  I64;
 
 int bin_str_to_int(char* string)
 {
