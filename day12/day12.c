@@ -2,26 +2,24 @@
 #include <inttypes.h>
 #include <stdint.h>
 
-typedef unsigned char byte;
-
 typedef struct Cave Cave;
 
 struct Cave
 {
-    char *name;
-    int *neighbours;
+    I8 *name;
+    I32 *neighbours;
     bool is_big;
-    int neighbour_count;
+    I32 neighbour_count;
 };
 
-int part1(char **lines);
-int part2(char **lines);
-int path_count1(Cave caves[32], int cave_count, bool visited[32], int curr_idx, int end_idx);
-int path_count2(Cave caves[32], int cave_count, bool visited[32], int start_idx, int end_idx, int curr_idx, bool double_dipped);
+I32 part1(I8 **lines); 
+I32 part2(I8 **lines);
+I32 path_count1(Cave caves[32], I32 cave_count, bool visited[32], I32 curr_idx, I32 end_idx);
+I32 path_count2(Cave caves[32], I32 cave_count, bool visited[32], I32 start_idx, I32 end_idx, I32 curr_idx, bool double_dipped);
 
 void run(bool real)
 {
-    char **lines = get_lines_from_file(real ? "input.txt" : "example.txt");
+    I8 **lines = get_lines_from_file(real ? "input.txt" : "example.txt");
 
     printf("Part 1\n");
     printf("= %u\n", part1(lines));
@@ -30,7 +28,7 @@ void run(bool real)
     printf("= %u\n", part2(lines));
 }
 
-int main(int argc, char **argv)
+I32 main(I32 argc, I8 **argv)
 {
     printf("%s", argv[0]);
     printf("\nTEST:\n");
@@ -39,27 +37,27 @@ int main(int argc, char **argv)
     run(true);
 }
 
-int part1(char **lines)
+I32 part1(I8 **lines)
 {
     Cave caves[32] = {0};
-    int cave_count = 0;
-    for (int i = 0; lines[i] != NULL; i++)
+    I32 cave_count = 0;
+    for (I32 i = 0; lines[i] != NULL; i++)
     {
-        char *line = lines[i];
-        char *dash_ptr = strchr(line, '-');
-        int length = dash_ptr - line;
-        char *first_cave = (char *)malloc(length + 1);
-        char *second_cave = dash_ptr + 1;
+        I8 *line = lines[i]; 
+        I8 *dash_ptr = strchr(line, '-');
+        I32 length = dash_ptr - line;
+        I8 *first_cave = (I8 *)malloc(length + 1); 
+        I8 *second_cave = dash_ptr + 1;
         memcpy(first_cave, line, length);
         first_cave[length] = '\0';
 
         bool first_exists = false;
-        int first;
+        I32 first;
 
         bool second_exists = false;
-        int second;
+        I32 second;
 
-        for (int j = 0; j < cave_count; j++)
+        for (I32 j = 0; j < cave_count; j++)
         {
             Cave cave = caves[j];
             if (strcmp(cave.name, first_cave) == 0)
@@ -78,7 +76,7 @@ int part1(char **lines)
             Cave cave;
             cave.name = first_cave;
             cave.is_big = (*first_cave < 'a');
-            cave.neighbours = malloc(sizeof(int) * 32);
+            cave.neighbours = malloc(sizeof(I32) * 32);
             cave.neighbour_count = 0;
             first = cave_count;
             caves[cave_count++] = cave;
@@ -88,7 +86,7 @@ int part1(char **lines)
             Cave cave;
             cave.name = second_cave;
             cave.is_big = (*second_cave < 'a');
-            cave.neighbours = malloc(sizeof(int) * 32);
+            cave.neighbours = malloc(sizeof(I32) * 32);
             cave.neighbour_count = 0;
             second = cave_count;
             caves[cave_count++] = cave;
@@ -98,10 +96,10 @@ int part1(char **lines)
         caves[second].neighbours[caves[second].neighbour_count++] = first;
     }
 
-    int start_idx = 0;
-    int end_idx = 0;
+    I32 start_idx = 0;
+    I32 end_idx = 0;
 
-    for (int i = 0; i < cave_count; i++)
+    for (I32 i = 0; i < cave_count; i++)
     {
         if (strcmp(caves[i].name, "start") == 0)
             start_idx = i;
@@ -113,7 +111,7 @@ int part1(char **lines)
     return path_count1(caves, cave_count, visited, start_idx, end_idx);
 }
 
-int path_count1(Cave caves[32], int cave_count, bool visited[32], int curr_idx, int end_idx)
+I32 path_count1(Cave caves[32], I32 cave_count, bool visited[32], I32 curr_idx, I32 end_idx)
 {
     Cave cave = caves[curr_idx];
 
@@ -127,8 +125,8 @@ int path_count1(Cave caves[32], int cave_count, bool visited[32], int curr_idx, 
 
     visited[curr_idx] = true;
     bool next_visited[32];
-    int total = 0;
-    for (int i = 0; i < cave.neighbour_count; i++)
+    I32 total = 0;
+    for (I32 i = 0; i < cave.neighbour_count; i++)
     {
         memcpy(next_visited, visited, 32);
         total += path_count1(caves, cave_count, next_visited, cave.neighbours[i], end_idx);
@@ -136,27 +134,27 @@ int path_count1(Cave caves[32], int cave_count, bool visited[32], int curr_idx, 
     return total;
 }
 
-int part2(char **lines)
+I32 part2(I8 **lines)
 {
     Cave caves[32] = {0};
-    int cave_count = 0;
-    for (int i = 0; lines[i] != NULL; i++)
+    I32 cave_count = 0;
+    for (I32 i = 0; lines[i] != NULL; i++)
     {
-        char *line = lines[i];
-        char *dash_ptr = strchr(line, '-');
-        int length = dash_ptr - line;
-        char *first_cave = (char *)malloc(length + 1);
-        char *second_cave = dash_ptr + 1;
+        I8 *line = lines[i];
+        I8 *dash_ptr = strchr(line, '-');
+        I32 length = dash_ptr - line;
+        I8 *first_cave = (I8 *)malloc(length + 1);
+        I8 *second_cave = dash_ptr + 1;
         memcpy(first_cave, line, length);
         first_cave[length] = '\0';
 
         bool first_exists = false;
-        int first;
+        I32 first;
 
         bool second_exists = false;
-        int second;
+        I32 second;
 
-        for (int j = 0; j < cave_count; j++)
+        for (I32 j = 0; j < cave_count; j++)
         {
             Cave cave = caves[j];
             if (strcmp(cave.name, first_cave) == 0)
@@ -175,7 +173,7 @@ int part2(char **lines)
             Cave cave;
             cave.name = first_cave;
             cave.is_big = (*first_cave < 'a');
-            cave.neighbours = malloc(sizeof(int) * 32);
+            cave.neighbours = malloc(sizeof(I32) * 32);
             cave.neighbour_count = 0;
             first = cave_count;
             caves[cave_count++] = cave;
@@ -185,7 +183,7 @@ int part2(char **lines)
             Cave cave;
             cave.name = second_cave;
             cave.is_big = (*second_cave < 'a');
-            cave.neighbours = malloc(sizeof(int) * 32);
+            cave.neighbours = malloc(sizeof(I32) * 32);
             cave.neighbour_count = 0;
             second = cave_count;
             caves[cave_count++] = cave;
@@ -195,10 +193,10 @@ int part2(char **lines)
         caves[second].neighbours[caves[second].neighbour_count++] = first;
     }
 
-    int start_idx = 0;
-    int end_idx = 0;
+    I32 start_idx = 0;
+    I32 end_idx = 0;
 
-    for (int i = 0; i < cave_count; i++)
+    for (I32 i = 0; i < cave_count; i++)
     {
         if (strcmp(caves[i].name, "start") == 0)
             start_idx = i;
@@ -210,7 +208,7 @@ int part2(char **lines)
     return path_count2(caves, cave_count, visited, start_idx, end_idx, start_idx, false);
 }
 
-int path_count2(Cave caves[32], int cave_count, bool visited[32], int start_idx, int end_idx, int curr_idx, bool double_dipped)
+I32 path_count2(Cave caves[32], I32 cave_count, bool visited[32], I32 start_idx, I32 end_idx, I32 curr_idx, bool double_dipped)
 {
     Cave cave = caves[curr_idx];
     bool next_dipped = double_dipped;
@@ -234,8 +232,8 @@ int path_count2(Cave caves[32], int cave_count, bool visited[32], int start_idx,
 
     visited[curr_idx] = true;
     bool next_visited[32];
-    int total = 0;
-    for (int i = 0; i < cave.neighbour_count; i++)
+    I32 total = 0;
+    for (I32 i = 0; i < cave.neighbour_count; i++)
     {
         memcpy(next_visited, visited, 32);
         total += path_count2(caves, cave_count, next_visited, start_idx, end_idx, cave.neighbours[i], next_dipped);

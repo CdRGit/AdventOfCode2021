@@ -2,14 +2,12 @@
 #include <inttypes.h>
 #include <stdint.h>
 
-typedef unsigned char byte;
-
-int part1(char **lines);
-int part2(char **lines);
+I32 part1(I8 **lines);
+I32 part2(I8 **lines);
 
 void run(bool real)
 {
-    char **lines = get_lines_from_file(real ? "input.txt" : "example.txt");
+    I8 **lines = get_lines_from_file(real ? "input.txt" : "example.txt");
 
     printf("Part 1\n");
     printf("= %u\n", part1(lines));
@@ -18,7 +16,7 @@ void run(bool real)
     printf("= %u\n", part2(lines));
 }
 
-int main(int argc, char **argv)
+I32 main(I32 argc, I8 **argv)
 {
     printf("%s", argv[0]);
     printf("\nTEST:\n");
@@ -27,17 +25,17 @@ int main(int argc, char **argv)
     run(true);
 }
 
-int part1(char **lines)
+I32 part1(I8 **lines)
 {
-    int total_value = 0;
-    for (int i = 0; lines[i] != NULL; i++)
+    I32 total_value = 0;
+    for (I32 i = 0; lines[i] != NULL; i++)
     {
-        char *line = lines[i];
-        char chunks[1024];
-        int chunk_idx = 0;
-        for (int j = 0; line[j] != '\0'; j++)
+        I8 *line = lines[i];
+        I8 chunks[1024];
+        I32 chunk_idx = 0;
+        for (I32 j = 0; line[j] != '\0'; j++)
         {
-            char ch = line[j];
+            I8 ch = line[j];
             if (ch == '(' || ch == '[' || ch == '{' || ch == '<')
             {
                 chunks[chunk_idx++] = ch;
@@ -52,7 +50,7 @@ int part1(char **lines)
                 {
                     ch -= 2;
                 }
-                char other = chunks[--chunk_idx];
+                I8 other = chunks[--chunk_idx];
                 if (other != ch)
                 {
                     if (ch == '(')
@@ -79,20 +77,20 @@ int part1(char **lines)
     return total_value;
 }
 
-int part2(char **lines)
+I32 part2(I8 **lines)
 {
-    unsigned long long values[1024];
-    int value_idx = 0;
-    for (int i = 0; lines[i] != NULL; i++)
+    U64 values[1024];
+    I32 value_idx = 0;
+    for (I32 i = 0; lines[i] != NULL; i++)
     {
-        char *line = lines[i];
-        char chunks[1024];
-        int chunk_idx = 0;
+        I8 *line = lines[i];
+        I8 chunks[1024];
+        I32 chunk_idx = 0;
 
         bool success = true;
-        for (int j = 0; line[j] != '\0'; j++)
+        for (I32 j = 0; line[j] != '\0'; j++)
         {
-            char ch = line[j];
+            I8 ch = line[j];
             if (ch == '(' || ch == '[' || ch == '{' || ch == '<')
             {
                 chunks[chunk_idx++] = ch;
@@ -107,7 +105,7 @@ int part2(char **lines)
                 {
                     ch -= 2;
                 }
-                char other = chunks[--chunk_idx];
+                I8 other = chunks[--chunk_idx];
                 if (other != ch)
                 {
                     success = false;
@@ -118,11 +116,11 @@ int part2(char **lines)
 
         if (success)
         {
-            unsigned long long value = 0;
-            for (int i = chunk_idx - 1; i >= 0; i--)
+            U64 value = 0;
+            for (I32 i = chunk_idx - 1; i >= 0; i--)
             {
                 value *= 5;
-                char ch = chunks[i];
+                I8 ch = chunks[i];
                 if (ch == '(')
                 {
                     value += 1;
@@ -148,7 +146,7 @@ int part2(char **lines)
     }
     sort_in_place(values, value_idx);
     
-    int i = value_idx / 2;
+    I32 i = value_idx / 2;
     
     return values[i];
 }

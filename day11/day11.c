@@ -2,14 +2,12 @@
 #include <inttypes.h>
 #include <stdint.h>
 
-typedef unsigned char byte;
-
-int part1(char **lines);
-int part2(char **lines);
+int part1(I8 **lines);
+int part2(I8 **lines);
 
 void run(bool real)
 {
-    char **lines = get_lines_from_file(real ? "input.txt" : "example.txt");
+    I8 **lines = get_lines_from_file(real ? "input.txt" : "example.txt");
 
     printf("Part 1\n");
     printf("= %u\n", part1(lines));
@@ -18,7 +16,7 @@ void run(bool real)
     printf("= %u\n", part2(lines));
 }
 
-int main(int argc, char **argv)
+int main(int argc, I8 **argv)
 {
     printf("%s", argv[0]);
     printf("\nTEST:\n");
@@ -27,7 +25,7 @@ int main(int argc, char **argv)
     run(true);
 }
 
-int iteration(char octopi[100])
+int iteration(I8 octopi[100])
 {
     bool flashed[100] = {false};
     for (int y = 0; y < 10; y++)
@@ -93,12 +91,12 @@ int iteration(char octopi[100])
     return total;
 }
 
-int part1(char **lines)
+int part1(I8 **lines)
 {
-    char octopi[100] = {0};
+    I8 octopi[100] = {0};
     for (int y = 0; y < 10; y++)
     {
-        char *line = lines[y];
+        I8 *line = lines[y];
         for (int x = 0; x < 10; x++)
         {
             int index = x + y * 10;
@@ -115,12 +113,12 @@ int part1(char **lines)
     return total;
 }
 
-int part2(char **lines)
+int part2(I8 **lines)
 {
-    char octopi[100] = {0};
+    I8 octopi[100] = {0};
     for (int y = 0; y < 10; y++)
     {
-        char *line = lines[y];
+        I8 *line = lines[y];
         for (int x = 0; x < 10; x++)
         {
             int index = x + y * 10;

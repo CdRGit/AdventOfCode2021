@@ -17,23 +17,23 @@ typedef   signed int            I32;
 typedef unsigned long long int  U64;
 typedef   signed long long int  I64;
 
-int bin_str_to_int(char* string)
+I32 bin_str_to_int(I8* string)
 {
-    int value = 0;
-    for (int i = 0; string[i] != '\0'; i++) {
+    I32 value = 0;
+    for (I32 i = 0; string[i] != '\0'; i++) {
         value <<= 1;
         value |= string[i] == '1';
     }
     return value;
 }
 
-int to_int(char* string, int* length)
+I32 to_int(I8* string, I32* length)
 {
-    int temp = 0;
-    int j = 0;
+    I32 temp = 0;
+    I32 j = 0;
     for (j = 0; string[j] != '\0'; j++)
     {
-        int chr_val = string[j] - '0';
+        I32 chr_val = string[j] - '0';
         if (chr_val < 0 || chr_val > 9)
             break;
         temp = temp * 10 + chr_val;
@@ -43,7 +43,7 @@ int to_int(char* string, int* length)
     return temp;
 }
 
-char *get_file_content(char *filename)
+I8 *get_file_content(I8 *filename)
 {
     FILE *file = fopen(filename, "r");
 
@@ -54,10 +54,10 @@ char *get_file_content(char *filename)
     }
 
     fseek(file, 0, SEEK_END);
-    int lengthOfFile = ftell(file);
+    I32 lengthOfFile = ftell(file);
     rewind(file);
 
-    char *str = malloc(lengthOfFile + 1);
+    I8 *str = malloc(lengthOfFile + 1);
 
     if (str == NULL) {
         fprintf(stderr, "MALLOC FAILED\n");
@@ -66,8 +66,8 @@ char *get_file_content(char *filename)
 
     memset(str, 0, lengthOfFile + 1);
 
-    char c;
-    int i = 0;
+    I8 c;
+    I32 i = 0;
     while ((c = fgetc(file)) != EOF)
     {
         str[i++] = c;
@@ -78,14 +78,14 @@ char *get_file_content(char *filename)
     return str;
 }
 
-char *comma_buffer[32 * 1024];
+I8 *comma_buffer[32 * 1024];
 
-char **split_by_comma(char *text)
+I8 **split_by_comma(I8 *text)
 {
-    char *temp = malloc(strlen(text));
+    I8 *temp = malloc(strlen(text));
 
-    int i = 0;
-    int j = 0;
+    I32 i = 0;
+    I32 j = 0;
 
     while (*text != '\0')
     {
@@ -108,14 +108,14 @@ char **split_by_comma(char *text)
     return comma_buffer;
 }
 
-char *space_buffer[32 * 1024];
+I8 *space_buffer[32 * 1024];
 
-char **split_by_spaces(char *text)
+I8 **split_by_spaces(I8 *text)
 {
-    char *temp = malloc(strlen(text));
+    I8 *temp = malloc(strlen(text));
 
-    int i = 0;
-    int j = 0;
+    I32 i = 0;
+    I32 j = 0;
 
     while (*text != '\0')
     {
@@ -138,14 +138,14 @@ char **split_by_spaces(char *text)
     return space_buffer;
 }
 
-char *newline_buffer[32 * 1024];
+I8 *newline_buffer[32 * 1024];
 
-char **split_by_newlines(char *text)
+I8 **split_by_newlines(I8 *text)
 {
-    char *temp = malloc(strlen(text));
+    I8 *temp = malloc(strlen(text));
 
-    int i = 0;
-    int j = 0;
+    I32 i = 0;
+    I32 j = 0;
 
     while (*text != '\0')
     {
@@ -168,39 +168,39 @@ char **split_by_newlines(char *text)
     return newline_buffer;
 }
 
-int int_buffer[32 * 1024];
+I32 I32_buffer[32 * 1024];
 
-int *convert_to_int(char **lines)
+I32 *convert_to_int(I8 **lines)
 {
-    int i = 0;
+    I32 i = 0;
     for (i = 0; lines[i] != NULL; i++)
     {
-        char *line = lines[i];
-        int_buffer[i] = to_int(line, NULL);
+        I8 *line = lines[i];
+        I32_buffer[i] = to_int(line, NULL);
     }
-    int_buffer[i] = -1;
-    return int_buffer;
+    I32_buffer[i] = -1;
+    return I32_buffer;
 }
 
-char **get_lines_from_file(char *filename)
+I8 **get_lines_from_file(I8 *filename)
 {
-    char *content = get_file_content(filename);
+    I8 *content = get_file_content(filename);
     return split_by_newlines(content);
 }
 
-int *get_ints_from_file(char *filename)
+I32 *get_ints_from_file(I8 *filename)
 {
-    char **split = get_lines_from_file(filename);
+    I8 **split = get_lines_from_file(filename);
     return convert_to_int(split);
 }
 
-void sort_in_place(unsigned long long *array, int length) {
+void sort_in_place(U64 *array, I32 length) {
     if (length == 1)
         return;
 
-    int max_idx = 0;
-    unsigned long long max = 0;
-    for (int i = 0; i < length; i++) {
+    I32 max_idx = 0;
+    U64 max = 0;
+    for (I32 i = 0; i < length; i++) {
         if (array[i] > max)
         {
             max = array[i];

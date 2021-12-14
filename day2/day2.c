@@ -1,11 +1,11 @@
 #include "utils.h"
 
-int part1(char **lines);
-int part2(char **lines);
+I32 part1(I8 **lines); 
+I32 part2(I8 **lines);
 
 void run(bool real)
 {
-    char **lines = get_lines_from_file(real ? "input.txt" : "example.txt");
+    I8 **lines = get_lines_from_file(real ? "input.txt" : "example.txt");
 
     printf("Part 1\n");
     printf("= %u\n", part1(lines));
@@ -14,7 +14,7 @@ void run(bool real)
     printf("= %u\n", part2(lines));
 }
 
-int main(int argc, char **argv)
+I32 main(I32 argc, I8 **argv)
 {
     printf("%s", argv[0]);
     printf("\nTEST:\n");
@@ -23,22 +23,22 @@ int main(int argc, char **argv)
     run(true);
 }
 
-int part1(char **lines)
+I32 part1(I8 **lines)
 {
-    int x = 0, depth = 0;
+    I32 x = 0, depth = 0;
 
-    for (int i = 0; lines[i] != NULL; i++)
+    for (I32 i = 0; lines[i] != NULL; i++)
     {
-        char* line = lines[i];
-        char* space = strchr(line, ' ');
+        I8* line = lines[i];
+        I8* space = strchr(line, ' ');
         if (space == NULL)
         {
             fprintf(stderr, "SPACE NOT FOUND ON LINE %d\n", i + 1);
             exit(1);
         }
-        char* num = space + 1;
-        int value = to_int(num, NULL);
-        char first = *line;
+        I8* num = space + 1;
+        I32 value = to_int(num, NULL);
+        I8 first = *line;
         switch (first)
         {
             case 'f':
@@ -56,22 +56,22 @@ int part1(char **lines)
     return x * depth;
 }
 
-int part2(char **lines)
+I32 part2(I8 **lines)
 {
-    int x = 0, depth = 0, aim = 0;
+    I32 x = 0, depth = 0, aim = 0;
 
-    for (int i = 0; lines[i] != NULL; i++)
+    for (I32 i = 0; lines[i] != NULL; i++)
     {
-        char* line = lines[i];
-        char* space = strchr(line, ' ');
+        I8* line = lines[i];
+        I8* space = strchr(line, ' ');
         if (space == NULL)
         {
             fprintf(stderr, "SPACE NOT FOUND ON LINE %d\n", i + 1);
             exit(1);
         }
-        char* num = space + 1;
-        int value = to_int(num, NULL);
-        char first = *line;
+        I8* num = space + 1;
+        I32 value = to_int(num, NULL);
+        I8 first = *line;
         switch (first)
         {
             case 'f':

@@ -2,12 +2,12 @@
 #include <inttypes.h>
 #include <stdint.h>
 
-int part1(char **lines);
-int part2(char **lines);
+I32 part1(I8 **lines);
+I32 part2(I8 **lines);
 
 void run(bool real)
 {
-    char **lines = get_lines_from_file(real ? "input.txt" : "example.txt");
+    I8 **lines = get_lines_from_file(real ? "input.txt" : "example.txt");
 
     printf("Part 1\n");
     printf("= %u\n", part1(lines));
@@ -16,7 +16,7 @@ void run(bool real)
     printf("= %u\n", part2(lines));
 }
 
-int main(int argc, char **argv)
+I32 main(I32 argc, I8 **argv)
 {
     printf("%s", argv[0]);
     printf("\nTEST:\n");
@@ -25,37 +25,37 @@ int main(int argc, char **argv)
     run(true);
 }
 
-int part1(char **lines)
+I32 part1(I8 **lines)
 {
-    int width = strlen(lines[0]);
-    int height = 0;
+    I32 width = strlen(lines[0]);
+    I32 height = 0;
 
-    for (int y = 0; lines[y] != NULL; y++)
+    for (I32 y = 0; lines[y] != NULL; y++)
     {
         height++;
     }
 
-    unsigned char *grid = malloc(width * height);
+    I8 *grid = malloc(width * height);
     memset(grid, 0, width * height);
 
-    for (int y = 0; y < height; y++)
+    for (I32 y = 0; y < height; y++)
     {
-        char *line = lines[y];
-        for (int x = 0; x < width; x++)
+        I8 *line = lines[y];
+        for (I32 x = 0; x < width; x++)
         {
-            char ch = line[x];
+            I8 ch = line[x];
             grid[x + y * width] = ch - '0';
         }
     }
 
-    int count = 0;
-    for (int y = 0; y < height; y++)
+    I32 count = 0;
+    for (I32 y = 0; y < height; y++)
     {
-        char *line = lines[y];
-        for (int x = 0; x < width; x++)
+        I8 *line = lines[y];
+        for (I32 x = 0; x < width; x++)
         {
-            int min = 0x7FFFFFFF;
-            int curr = grid[x + y * width];
+            I32 min = 0x7FFFFFFF;
+            I32 curr = grid[x + y * width];
             if (x > 0 && grid[x - 1 + y * width] < min)
             {
                 min = grid[x - 1 + y * width];
@@ -82,42 +82,42 @@ int part1(char **lines)
     return count;
 }
 
-int find_size_of_basin(unsigned char **grid, int width, int height, int x, int y);
+I32 find_size_of_basin(I8 **grid, I32 width, I32 height, I32 x, I32 y);
 
-int part2(char **lines)
+I32 part2(I8 **lines)
 {
-    int width = strlen(lines[0]);
-    int height = 0;
+    I32 width = strlen(lines[0]);
+    I32 height = 0;
 
-    for (int y = 0; lines[y] != NULL; y++)
+    for (I32 y = 0; lines[y] != NULL; y++)
     {
         height++;
     }
 
-    unsigned char *grid = malloc(width * height);
+    I8 *grid = malloc(width * height);
     memset(grid, 0, width * height);
 
-    for (int y = 0; y < height; y++)
+    for (I32 y = 0; y < height; y++)
     {
-        char *line = lines[y];
-        for (int x = 0; x < width; x++)
+        I8 *line = lines[y];
+        for (I32 x = 0; x < width; x++)
         {
-            char ch = line[x];
+            I8 ch = line[x];
             grid[x + y * width] = ch - '0';
         }
     }
 
-    int highest[3] = {0, 0, 0};
+    I32 highest[3] = {0, 0, 0};
 
-    for (int x = 0; x < width; x++)
+    for (I32 x = 0; x < width; x++)
     {
-        for (int y = 0; y < height; y++)
+        for (I32 y = 0; y < height; y++)
         {
-            int size = find_size_of_basin(&grid, width, height, x, y);
-            int lowest_of_highest_index = 0;
-            int lowest_of_highest = 0x7FFFFFFF;
+            I32 size = find_size_of_basin(&grid, width, height, x, y);
+            I32 lowest_of_highest_index = 0;
+            I32 lowest_of_highest = 0x7FFFFFFF;
 
-            for (int i = 0; i < 3; i++) {
+            for (I32 i = 0; i < 3; i++) {
                 if (highest[i] < lowest_of_highest) {
                     lowest_of_highest = highest[i];
                     lowest_of_highest_index = i;
@@ -133,7 +133,7 @@ int part2(char **lines)
     return highest[0] * highest[1] * highest[2];
 }
 
-int find_size_of_basin(unsigned char **grid, int width, int height, int x, int y)
+I32 find_size_of_basin(I8 **grid, I32 width, I32 height, I32 x, I32 y)
 {
     if (x < 0 || y < 0 || x > width - 1 || y > height - 1)
     {
@@ -144,7 +144,7 @@ int find_size_of_basin(unsigned char **grid, int width, int height, int x, int y
         return 0;
     }
     (*grid)[x + y * width] = 9;
-    int size = 1;
+    I32 size = 1;
     size += find_size_of_basin(grid, width, height, x - 1, y);
     size += find_size_of_basin(grid, width, height, x + 1, y);
     size += find_size_of_basin(grid, width, height, x, y - 1);

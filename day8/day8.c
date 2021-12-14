@@ -2,12 +2,12 @@
 #include <inttypes.h>
 #include <stdint.h>
 
-int part1(char **entries);
-int part2(char **entries);
+I32 part1(I8 **entries);
+I32 part2(I8 **entries);
 
 void run(bool real)
 {
-    char **entries = get_lines_from_file(real ? "input.txt" : "example.txt");
+    I8 **entries = get_lines_from_file(real ? "input.txt" : "example.txt");
 
     printf("Part 1\n");
     printf("= %u\n", part1(entries));
@@ -16,7 +16,7 @@ void run(bool real)
     printf("= %u\n", part2(entries));
 }
 
-int main(int argc, char **argv)
+I32 main(I32 argc, I8 **argv)
 {
     printf("%s", argv[0]);
     printf("\nTEST:\n");
@@ -24,14 +24,14 @@ int main(int argc, char **argv)
     printf("\nREAL:\n");
     run(true);
 }
-int part1(char **entries)
+I32 part1(I8 **entries)
 {
-    int distinct_count = 0;
-    for (int i = 0; entries[i] != NULL; i++)
+    I32 distinct_count = 0;
+    for (I32 i = 0; entries[i] != NULL; i++)
     {
-        char *value = strchr(entries[i], '|') + 2;
-        int len = 0;
-        for (int j = 0; value[j] != '\0'; j++)
+        I8 *value = strchr(entries[i], '|') + 2;
+        I32 len = 0;
+        for (I32 j = 0; value[j] != '\0'; j++)
         {
             if (value[j] == ' ')
             {
@@ -54,7 +54,7 @@ int part1(char **entries)
     return distinct_count;
 }
 
-typedef unsigned char segment;
+typedef I8 segment;
 #define TOP 1
 #define TOP_LEFT 2
 #define TOP_RIGHT 4
@@ -65,21 +65,21 @@ typedef unsigned char segment;
 #define ALL (TOP | TOP_LEFT | TOP_RIGHT | MIDDLE | BOTTOM_LEFT | BOTTOM_RIGHT | BOTTOM)
 
 bool validate_digit(segment digit[7]);
-int digit_from_segments(segment segments);
+I32 digit_from_segments(segment segments);
 
-int part2(char **entries)
+I32 part2(I8 **entries)
 {
-    int total = 0;
-    for (int i = 0; entries[i] != NULL; i++)
+    I32 total = 0;
+    for (I32 i = 0; entries[i] != NULL; i++)
     {
         segment digit[7] = {ALL, ALL, ALL, ALL, ALL, ALL, ALL};
-        char *entry = entries[i];
-        int bar_pos = strchr(entry, '|') - entry;
-        int max_len = bar_pos - 1;
-        char *recorded = strdup(entry);
+        I8 *entry = entries[i];
+        I32 bar_pos = strchr(entry, '|') - entry;
+        I32 max_len = bar_pos - 1;
+        I8 *recorded = strdup(entry);
         recorded[max_len] = '\0';
-        char *actual = bar_pos + entry + 2;
-        char **rec_entries = split_by_spaces(recorded);
+        I8 *actual = bar_pos + entry + 2;
+        I8 **rec_entries = split_by_spaces(recorded);
 
         uint8_t shared_sixes = ALL;
         uint8_t shared_fives = ALL;
@@ -87,14 +87,14 @@ int part2(char **entries)
         uint8_t seven;
         uint8_t one;
 
-        for (int j = 0; rec_entries[j] != NULL; j++)
+        for (I32 j = 0; rec_entries[j] != NULL; j++)
         {
-            char *rec_entry = rec_entries[j];
-            int len = strlen(rec_entry);
+            I8 *rec_entry = rec_entries[j];
+            I32 len = strlen(rec_entry);
             uint8_t value = 0;
-            for (int k = 0; k < len; k++)
+            for (I32 k = 0; k < len; k++)
             {
-                int index = rec_entry[k] - 'a';
+                I32 index = rec_entry[k] - 'a';
                 value |= 1 << index;
             }
             if (len == 2)
@@ -119,7 +119,7 @@ int part2(char **entries)
             }
         }
 
-        for (int j = 0; j < 7; j++)
+        for (I32 j = 0; j < 7; j++)
         {
             bool is_in_one = 1 & (one >> j);
             bool is_in_four = 1 & (four >> j);
@@ -144,11 +144,11 @@ int part2(char **entries)
         while (!validate_digit(digit))
         {
             // do cleans here (turned out to be unnessecary but still implemented)
-            for (int j = 0; j < 7; j++)
+            for (I32 j = 0; j < 7; j++)
             {
                 // count the bits
-                unsigned int v = digit[j];
-                unsigned int c = 0;
+                 U32 v = digit[j];
+                 U32 c = 0;
                 for (c = 0; v; v >>= 1)
                 {
                     c += v & 1;
@@ -157,7 +157,7 @@ int part2(char **entries)
                 if (c == 1) {
                     // wahoo!
                     segment value = digit[j];
-                    for (int k = 0; k < 7; k++) {
+                    for (I32 k = 0; k < 7; k++) {
                         if (k == j)
                             continue;
                         digit[k] &= value ^ 0x7F;
@@ -166,19 +166,19 @@ int part2(char **entries)
             }
         }
 
-        char **actual_entries = split_by_spaces(actual);
-        int num = 0;
-        for (int j = 0; actual_entries[j] != NULL; j++)
+        I8 **actual_entries = split_by_spaces(actual);
+        I32 num = 0;
+        for (I32 j = 0; actual_entries[j] != NULL; j++)
         {
-            char *actual_entry = actual_entries[j];
-            int len = strlen(actual_entry);
+            I8 *actual_entry = actual_entries[j];
+            I32 len = strlen(actual_entry);
             segment segments = 0;
-            for (int k = 0; k < len; k++)
+            for (I32 k = 0; k < len; k++)
             {
-                int index = actual_entry[k] - 'a';
+                I32 index = actual_entry[k] - 'a';
                 segments |= digit[index];
             }
-            int digit = digit_from_segments(segments);
+            I32 digit = digit_from_segments(segments);
             num *= 10;
             num += digit;
         }
@@ -198,7 +198,7 @@ int part2(char **entries)
 #define NINE (TOP | TOP_LEFT | TOP_RIGHT | MIDDLE | BOTTOM_RIGHT | BOTTOM)
 #define ZERO (TOP | TOP_LEFT | TOP_RIGHT | BOTTOM_LEFT | BOTTOM_RIGHT | BOTTOM)
 
-int digit_from_segments(segment segments)
+I32 digit_from_segments(segment segments)
 {
     switch (segments)
     {
@@ -231,7 +231,7 @@ int digit_from_segments(segment segments)
 bool validate_digit(segment digit[7])
 {
     segment complete = 0;
-    for (int i = 0; i < 7; i++)
+    for (I32 i = 0; i < 7; i++)
     {
         complete += digit[i];
     }

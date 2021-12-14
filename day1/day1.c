@@ -1,11 +1,11 @@
 #include "utils.h"
 
-int part1(int *ints);
-int part2(int *ints);
+I32 part1(I32 *ints);
+I32 part2(I32 *ints);
 
 void run(bool real)
 {
-    int *ints = get_ints_from_file(real ? "input.txt" : "example.txt");
+    I32 *ints = get_ints_from_file(real ? "input.txt" : "example.txt");
 
     printf("Part 1\n");
     printf("= %u\n", part1(ints));
@@ -14,7 +14,7 @@ void run(bool real)
     printf("= %u\n", part2(ints));
 }
 
-int main(int argc, char **argv)
+I32 main(I32 argc, I8 **argv)
 {
     printf("%s", argv[0]);
     printf("\nTEST:\n");
@@ -23,12 +23,12 @@ int main(int argc, char **argv)
     run(true);
 }
 
-int part1(int *ints)
+I32 part1(I32 *ints)
 {
-    int count = 0;
-    int previous = 0x7FFFFFFF;
+    I32 count = 0;
+    I32 previous = 0x7FFFFFFF;
 
-    for (int i = 0; ints[i] != -1; i++)
+    for (I32 i = 0; ints[i] != -1; i++)
     {
         if (ints[i] > previous)
         {
@@ -40,17 +40,17 @@ int part1(int *ints)
     return count;
 }
 
-int part2(int *ints)
+I32 part2(I32 *ints)
 {
-    int count = 0;
-    int prev[3] = {0};
+    I32 count = 0;
+    I32 prev[3] = {0};
 
-    for (int i = 0; ints[i] != -1; i++)
+    for (I32 i = 0; ints[i] != -1; i++)
     {
         if (i >= 3)
         {
-            int prev_sum = prev[0] + prev[1] + prev[2];
-            int sum = prev[1] + prev[2] + ints[i];
+            I32 prev_sum = prev[0] + prev[1] + prev[2];
+            I32 sum = prev[1] + prev[2] + ints[i];
 
             if (sum > prev_sum)
             {
@@ -58,7 +58,7 @@ int part2(int *ints)
             }
         }
 
-        for (int j = 1; j < 3; j++)
+        for (I32 j = 1; j < 3; j++)
         {
             prev[j - 1] = prev[j];
         }
