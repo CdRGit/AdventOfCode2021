@@ -73,7 +73,7 @@ I32 part2(I8 **entries)
     for (I32 i = 0; entries[i] != NULL; i++)
     {
         segment digit[7] = {ALL, ALL, ALL, ALL, ALL, ALL, ALL};
-        I8 *entry = entries[i];
+        char *entry = entries[i];
         I32 bar_pos = strchr(entry, '|') - entry;
         I32 max_len = bar_pos - 1;
         I8 *recorded = strdup(entry);
