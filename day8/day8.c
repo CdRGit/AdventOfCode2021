@@ -1,5 +1,5 @@
 #include "utils.h"
-#include <inttypes.h>
+
 #include <stdint.h>
 
 I32 part1(I8 **entries);

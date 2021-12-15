@@ -4,18 +4,19 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <inttypes.h>
 
 #define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 
-typedef unsigned char           U8;
-typedef   signed char           I8;
-typedef unsigned short int      U16;
-typedef   signed short int      I16;
-typedef unsigned int            U32;
-typedef   signed int            I32;
-typedef unsigned long long int  U64;
-typedef   signed long long int  I64;
+typedef uint8_t  U8;
+typedef int8_t   I8;
+typedef uint16_t U16;
+typedef int16_t  I16;
+typedef uint32_t U32;
+typedef int32_t  I32;
+typedef uint64_t U64;
+typedef int64_t  I64;
 
 I32 bin_str_to_int(I8* string)
 {

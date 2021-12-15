@@ -1,5 +1,5 @@
 #include "utils.h"
-#include <inttypes.h>
+
 #include <stdint.h>
 
 uint64_t fish_sim(I32 *ints, I32 max_days);

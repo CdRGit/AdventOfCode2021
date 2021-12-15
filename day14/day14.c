@@ -1,5 +1,5 @@
 #include "utils.h"
-#include <inttypes.h>
+
 #include <stdint.h>
 
 typedef U64 Pair;

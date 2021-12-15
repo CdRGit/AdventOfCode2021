@@ -1,5 +1,5 @@
 #include "utils.h"
-#include <inttypes.h>
+
 #include <stdint.h>
 
 int part1(I8 **lines);

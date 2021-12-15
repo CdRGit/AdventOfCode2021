@@ -1,5 +1,5 @@
 #include "utils.h"
-#include <inttypes.h>
+
 #include <stdint.h>
 
 typedef struct Cave Cave;
