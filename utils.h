@@ -30,9 +30,10 @@ I32 bin_str_to_int(I8* string)
 
 I32 to_int(I8* string, I32* length)
 {
+    bool is_neg = string[0] == '-';
     I32 temp = 0;
-    I32 j = 0;
-    for (j = 0; string[j] != '\0'; j++)
+    I32 j = is_neg;
+    for (; string[j] != '\0'; j++)
     {
         I32 chr_val = string[j] - '0';
         if (chr_val < 0 || chr_val > 9)
@@ -41,7 +42,7 @@ I32 to_int(I8* string, I32* length)
     }
     if (length != NULL)
         *length = j;
-    return temp;
+    return is_neg ? -temp : temp;
 }
 
 I8 *get_file_content(I8 *filename)
