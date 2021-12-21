@@ -21,7 +21,7 @@ typedef int64_t  I64;
 I32 bin_str_to_int(I8* string)
 {
     I32 value = 0;
-    for (I32 i = 0; string[i] != '\0'; i++) {
+    for (I32 i = 0; string[i] == '1' || string[i] == '0'; i++) {
         value <<= 1;
         value |= string[i] == '1';
     }
@@ -72,7 +72,9 @@ I8 *get_file_content(I8 *filename)
     I32 i = 0;
     while ((c = fgetc(file)) != EOF)
     {
-        str[i++] = c;
+        // fuck you windows for giving me carriage return
+        if (c != '\r')
+            str[i++] = c;
     }
 
     fclose(file);
