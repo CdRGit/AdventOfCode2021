@@ -13,7 +13,7 @@ else
     cd $1
     if [ "$2" == "c" ]
     then
-        cc $1.c -I../ -o $1.elf
+        gcc $1.c -I../ -o $1.elf -g
     fi
     ./$1.elf
     cd ..
