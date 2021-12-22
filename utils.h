@@ -197,7 +197,9 @@ I32 *convert_to_int(I8 **lines)
 I8 **get_lines_from_file(I8 *filename)
 {
     I8 *content = get_file_content(filename);
-    return split_by_newlines(content);
+    I8 **lines = split_by_newlines(content);
+    free(content);
+    return lines;
 }
 
 I32 *get_ints_from_file(I8 *filename)

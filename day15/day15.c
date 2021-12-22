@@ -109,7 +109,6 @@ U64 dijkstra(U16 start_x, U16 start_y, U16 goal_x, U16 goal_y, U8 values[SIZE * 
             {
                 dist[x + y * SIZE] = alt;
                 prev[x + y * SIZE] = current;
-                printf("         \r %3d, %3d\r", x, y);
             }
         }
     }
