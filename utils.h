@@ -154,7 +154,7 @@ I8 *newline_buffer[32 * 1024];
 
 I8 **split_by_newlines(I8 *text)
 {
-    I8 *temp = malloc(strlen(text));
+    I8 *temp = malloc(strlen(text) + 1);
 
     I32 i = 0;
     I32 j = 0;
@@ -167,7 +167,7 @@ I8 **split_by_newlines(I8 *text)
             text++;
             i = 0;
             newline_buffer[j++] = temp;
-            temp = malloc(strlen(text));
+            temp = malloc(strlen(text) + 1);
         }
         else
         {
