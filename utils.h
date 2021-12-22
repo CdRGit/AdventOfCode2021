@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <inttypes.h>
+#include <assert.h>
 
 #define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
@@ -17,6 +18,13 @@ typedef uint32_t U32;
 typedef int32_t  I32;
 typedef uint64_t U64;
 typedef int64_t  I64;
+
+I32 ptr_arr_len(void **arr)
+{
+    I32 len = 0;
+    for (len = 0; arr[len] != NULL; len++);
+    return len;
+}
 
 I32 bin_str_to_int(I8* string)
 {
